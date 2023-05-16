@@ -6,7 +6,7 @@ const CountryDetailsPage = () => {
     let {countryName} = useParams();
     const navigate = useNavigate();
 
-    const {isLoading, data} = useQuery('country-details', () => CountryAPI.getCountryDetails(countryName || ''))
+    const {isLoading, data} = useQuery(`country-details-${countryName}`, () => CountryAPI.getCountryDetails(countryName || ''))
 
     return (
         <>
