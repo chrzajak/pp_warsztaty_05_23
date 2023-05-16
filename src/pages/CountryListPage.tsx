@@ -2,30 +2,29 @@ import React, {FC, useEffect, useState} from "react";
 import {Country} from "../models/Country";
 import {useNavigate} from "react-router-dom";
 import CountryAPI from "../api/CountryAPI";
+import {useQuery} from "react-query";
 
 const CountryListPage: FC = () => {
-    const [countries, setCountries] = useState<Country[]>([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        CountryAPI.getCountryList().then((data) => {
-            setCountries(data);
-        })
-    }, []);
+    const {isLoading, data} = useQuery('countries', CountryAPI.getCountryList);
 
     return (
         <>
             <h1>Country list</h1>
-            <ul>
-                {countries.map((country) => (
-                        <li>{country.name.common}
-                            <button onClick={() => navigate(`/details/${country.name.common}`)}>
-                                details
-                            </button>
-                        </li>
-                    )
-                )}
-            </ul>
+            {isLoading && 'Loading ...'}
+            {data && (
+                <ul>
+                    {data.map((country) => (
+                            <li>{country.name.common}
+                                <button onClick={() => navigate(`/details/${country.name.common}`)}>
+                                    details
+                                </button>
+                            </li>
+                        )
+                    )}
+                </ul>
+            )}
         </>
     );
 }

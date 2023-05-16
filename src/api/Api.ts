@@ -19,7 +19,7 @@ API.interceptors.response.use(
         return response;
     },
     (error) => {
-        if (error.response.status = 404) {
+        if (error.response.status == 404) {
             window.location.href = '/error'
         } else {
             return Promise.reject(error);
