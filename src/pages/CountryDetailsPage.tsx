@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {CountryDetails} from "../models/CountryDetails";
 import {useNavigate, useParams} from "react-router-dom";
+import CountryAPI from "../api/CountryAPI";
 
 const CountryDetailsPage = () => {
     let {countryName} = useParams();
@@ -9,19 +10,9 @@ const CountryDetailsPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`https://restcountries.com/v3.1/name/${countryName}?fields=name,area,population,capital`,
-            {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(
-            (response) => {
-                return response.json()
-            }).then((data) =>
-            setCountry(data ? data[0] : undefined)
-        )
-    }, []);
+        countryName && CountryAPI.getCountryDetails(countryName)
+            .then((data) => setCountry(data));
+    }, [countryName]);
 
     return (
         <>

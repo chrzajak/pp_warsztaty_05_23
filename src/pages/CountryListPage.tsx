@@ -1,24 +1,16 @@
 import React, {FC, useEffect, useState} from "react";
 import {Country} from "../models/Country";
 import {useNavigate} from "react-router-dom";
+import CountryAPI from "../api/CountryAPI";
 
 const CountryListPage: FC = () => {
     const [countries, setCountries] = useState<Country[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`https://restcountries.com/v3.1/all?fields=name`,
-            {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(
-            (response) => {
-                return response.json()
-            }).then((data) =>
-            setCountries(data)
-        )
+        CountryAPI.getCountryList().then((data) => {
+            setCountries(data);
+        })
     }, []);
 
     return (
