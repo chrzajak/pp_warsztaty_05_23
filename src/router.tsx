@@ -1,6 +1,7 @@
 import {createBrowserRouter} from "react-router-dom";
 import CountryListPage from "./pages/CountryListPage";
 import React from "react";
+import CountryDetailsPage from "./pages/CountryDetailsPage";
 
 const router = createBrowserRouter([
     {
@@ -9,7 +10,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/details/:countryName',
-        element: (<></>)
+        element: <CountryDetailsPage />
     }
 ]);
 
